@@ -36,62 +36,67 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
         }
 
-        /* Container ottimizzato per schermi larghi */
+        /* Container che riempie lo schermo senza scroll di pagina */
         #app-container {
             width: 90%;
             max-width: 1400px;
-            margin: 2rem auto;
+            margin: 1rem auto;
             background: var(--card-bg);
             border-radius: 15px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            min-height: 80vh;
+            height: calc(100dvh - 2rem);
         }
 
         header {
             background-color: var(--primary);
             color: white;
-            padding: 1.5rem 2rem;
+            padding: 0.8rem 2rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 1.5rem;
+            gap: 1.2rem;
             position: relative;
+            flex-shrink: 0;
         }
 
         header .logo {
-            height: 80px;
-            width: 80px;
+            height: 56px;
+            width: 56px;
             border-radius: 50%;
             background: white;
-            padding: 6px;
+            padding: 5px;
             box-sizing: border-box;
             flex-shrink: 0;
             box-shadow: 0 2px 6px rgba(0,0,0,0.2);
         }
 
-        header h1 { margin: 0; font-size: 2.5rem; }
+        header h1 { margin: 0; font-size: 1.9rem; }
 
         .progress-bar {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 6px;
             background: #e2e8f0;
-            padding: 10px;
+            padding: 7px;
+            flex-shrink: 0;
         }
 
         .step {
-            padding: 10px 20px;
+            padding: 6px 13px;
             border-radius: 20px;
             background: #cbd5e0;
             color: #4a5568;
             font-weight: bold;
+            font-size: 0.9rem;
             transition: all 0.3s;
         }
 
@@ -102,8 +107,10 @@
 
         .section {
             display: none;
-            padding: 3rem;
+            padding: 1.6rem 2.5rem;
             flex-grow: 1;
+            min-height: 0;
+            overflow-y: auto;
             animation: fadeIn 0.5s;
         }
 
@@ -115,8 +122,8 @@
         }
 
         /* Tipografia e Layout Generico */
-        h2 { font-size: 2rem; color: var(--primary); margin-bottom: 1.5rem; border-bottom: 3px solid var(--secondary); padding-bottom: 10px; display: inline-block;}
-        p { font-size: 1.2rem; line-height: 1.6; }
+        h2 { font-size: 1.7rem; color: var(--primary); margin: 0 0 1rem; border-bottom: 3px solid var(--secondary); padding-bottom: 8px; display: inline-block;}
+        p { font-size: 1.15rem; line-height: 1.5; margin: 0.6rem 0; }
 
         /* Video e Contenuti affiancati per schermi grandi */
         .split-layout {
@@ -127,12 +134,18 @@
         }
 
         video {
-            width: 100%;
+            display: block;
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 58vh;
+            margin: 0 auto;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        .intro-video { max-width: 720px; margin: 1.5rem auto 2.5rem; }
+        .split-layout video { max-height: 64vh; }
+        .intro-video { max-width: 760px; margin: 0.8rem auto 0; text-align: center; }
 
         /* Confronto Carta vs Digitale */
         .confronto { margin-top: 1.5rem; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; }
@@ -151,15 +164,11 @@
         .somme-tot { display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center; font-size: 1.3rem; font-weight: bold; color: var(--primary); margin-bottom: 1rem; }
         .somme-tot span { display: inline-flex; align-items: center; gap: 0.5em; }
 
-        /* Riquadri attorno al video data center */
-        .video-domande, .scoperto-box { max-width: 720px; margin: 1.5rem auto; padding: 1.2rem 1.5rem; border-radius: 10px; }
-        .video-domande { background: #ebf4ff; border-left: 6px solid var(--primary); }
-        .scoperto-box { background: #f0fff4; border-left: 6px solid var(--secondary); margin-bottom: 2.5rem; }
-        .video-domande .titolo, .scoperto-box .titolo { display: flex; align-items: center; gap: 0.5em; font-weight: bold; font-size: 1.15rem; margin-bottom: 0.6rem; }
-        .video-domande .titolo { color: var(--primary); }
-        .scoperto-box .titolo { color: #276749; }
-        .video-domande ul, .scoperto-box ul { margin: 0; padding-left: 1.3rem; }
-        .video-domande li, .scoperto-box li { font-size: 1.1rem; line-height: 1.45; margin-bottom: 0.5rem; }
+        /* Riquadro domande attorno al video data center */
+        .video-domande { max-width: 900px; margin: 0.8rem auto 0; padding: 0.9rem 1.3rem; border-radius: 10px; background: #ebf4ff; border-left: 6px solid var(--primary); }
+        .video-domande .titolo { display: flex; align-items: center; gap: 0.5em; font-weight: bold; font-size: 1.05rem; margin-bottom: 0.4rem; color: var(--primary); }
+        .video-domande ul { margin: 0; padding-left: 1.2rem; columns: 2; column-gap: 2rem; }
+        .video-domande li { font-size: 1rem; line-height: 1.35; margin-bottom: 0.3rem; break-inside: avoid; }
 
         /* Scenari - la sfida finale */
         .scenario-card { background: #f7fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
@@ -171,6 +180,15 @@
         .scenario-feedback [data-lucide] { flex-shrink: 0; margin-top: 2px; width: 1.4em; height: 1.4em; }
         .scenario-feedback.ottima [data-lucide] { color: var(--secondary); }
         .scenario-feedback.ok [data-lucide] { color: #b7791f; }
+
+        /* Quiz terminologia */
+        .poll-options.bloccato .poll-btn { pointer-events: none; }
+        .poll-options.bloccato .poll-btn:not(.corretta):not(.errata) { opacity: 0.5; }
+        .poll-btn.corretta { background: var(--secondary); color: #fff; border-color: var(--secondary); }
+        .poll-btn.errata { background: #fffaf0; color: #b7791f; border-color: #dd9b34; }
+        .quiz-punteggio { font-size: 1.4rem; font-weight: bold; color: var(--primary); text-align: center; margin-bottom: 0.8rem; }
+        .quiz-barra { height: 16px; background: #cbd5e0; border-radius: 8px; overflow: hidden; margin-bottom: 1rem; }
+        .quiz-barra span { display: block; height: 100%; background: var(--secondary); border-radius: 8px; transition: width 0.6s; }
 
         /* Pulsanti */
         .btn {
@@ -188,7 +206,8 @@
 
         .btn:hover { background-color: var(--primary-dark); }
 
-        .btn-nav { display: flex; justify-content: space-between; padding: 2rem 3rem; background: #edf2f7; }
+        .btn-nav { display: flex; justify-content: space-between; padding: 1rem 2.5rem; background: #edf2f7; flex-shrink: 0; }
+        .btn { margin-top: 0; }
 
         /* Footer scuola */
         .app-footer {
@@ -196,10 +215,11 @@
             align-items: center;
             justify-content: center;
             gap: 0.9rem;
-            padding: 1.2rem 2rem;
+            padding: 0.6rem 2rem;
             background: var(--primary-dark);
             color: #cbd5e0;
-            font-size: 0.85rem;
+            font-size: 0.78rem;
+            flex-shrink: 0;
             line-height: 1.4;
             text-align: center;
         }
@@ -209,8 +229,8 @@
         /* Icone Lucide */
         [data-lucide] { width: 1.15em; height: 1.15em; vertical-align: -0.18em; stroke-width: 2.25; }
         .btn, .poll-btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.55em; }
-        .flip-card-front { gap: 0.7rem; }
-        .flip-card-front [data-lucide] { width: 2.6rem; height: 2.6rem; }
+        .flip-card-front { gap: 0.5rem; }
+        .flip-card-front [data-lucide] { width: 2.1rem; height: 2.1rem; }
 
         /* Votazione Termometro */
         .poll-options { display: flex; gap: 15px; margin-top: 20px; }
@@ -224,14 +244,14 @@
         /* Griglia Flip Cards (Dietro le quinte) */
         .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.1rem;
+            margin-top: 1rem;
         }
 
         .flip-card {
             background-color: transparent;
-            height: 250px;
+            height: clamp(150px, 23vh, 210px);
             perspective: 1000px;
             cursor: pointer;
             touch-action: manipulation;
@@ -263,18 +283,21 @@
             box-sizing: border-box;
         }
 
-        .flip-card-front { background-color: var(--primary); color: white; font-size: 1.5rem; font-weight: bold; }
-        .flip-card-back { background-color: var(--secondary); color: white; transform: rotateY(180deg); font-size: 1.1rem; }
+        .flip-card-front { background-color: var(--primary); color: white; font-size: 1.2rem; font-weight: bold; padding: 12px; }
+        .flip-card-back { background-color: var(--secondary); color: white; transform: rotateY(180deg); font-size: 0.92rem; line-height: 1.3; padding: 14px; overflow-y: auto; }
 
 
         /* Adattamento per iPad in verticale e schermi piccoli */
         @media (max-width: 900px) {
-            header h1 { font-size: 1.8rem; }
-            header .logo { height: 60px; width: 60px; }
-            .section { padding: 2rem 1.5rem; }
-            .split-layout { grid-template-columns: 1fr; gap: 1.5rem; }
-            .btn-nav { padding: 1.5rem; }
-            h2 { font-size: 1.6rem; }
+            header h1 { font-size: 1.5rem; }
+            header .logo { height: 48px; width: 48px; }
+            .section { padding: 1.2rem 1.3rem; }
+            .split-layout { grid-template-columns: 1fr; gap: 1rem; }
+            .split-layout video { max-height: 46vh; }
+            .video-domande ul { columns: 1; }
+            .btn-nav { padding: 0.8rem 1.3rem; }
+            .btn { padding: 12px 22px; font-size: 1.1rem; }
+            h2 { font-size: 1.4rem; }
             .confronto-head, .confronto-row { grid-template-columns: 60px 1fr 60px; gap: 0.6rem; padding: 0.7rem; }
             .confronto-row .aff { font-size: 1rem; }
             .chk { width: 46px; height: 46px; }
@@ -292,9 +315,11 @@
     <div class="progress-bar">
         <div class="step active" id="step-1">1. Il Video</div>
         <div class="step" id="step-2">2. Il Termometro</div>
-        <div class="step" id="step-3">3. Dietro le Quinte</div>
-        <div class="step" id="step-4">4. Il Confronto</div>
-        <div class="step" id="step-5">5. La Sfida Finale</div>
+        <div class="step" id="step-3">3. Il Data Center</div>
+        <div class="step" id="step-4">4. I Miti</div>
+        <div class="step" id="step-5">5. Il Confronto</div>
+        <div class="step" id="step-6">6. La Sfida</div>
+        <div class="step" id="step-7">7. Le Parole Tech</div>
     </div>
 
     <div id="fase-1" class="section active">
@@ -306,7 +331,7 @@
                 <p><strong>Cosa succede alla fine? C'è un limite al digitale?</strong></p>
             </div>
             <div>
-                <video src="https://www.dropbox.com/scl/fi/y1d6dzp3x9ydx8himzl2p/ipad_carta.mp4?rlkey=wvh1ypi4d2j5zh20x225nif9r&amp;st=mypsqhvt&amp;dl=1" controls preload="auto" playsinline>
+                <video src="https://www.dropbox.com/scl/fi/zg1nk440pdiuj9pa181za/ipad_carta.mp4?rlkey=wznqtrcbfmeovrh5onum2c3e2&amp;st=xd1bq69n&amp;dl=1" controls preload="auto" playsinline>
                     Il tuo browser non supporta il tag video. Assicurati che il file ipad_carta.mp4 sia nella stessa cartella.
                 </video>
             </div>
@@ -322,18 +347,8 @@
     </div>
 
     <div id="fase-3" class="section">
-        <h2>Dietro le Quinte: Smascheriamo i Miti</h2>
-        <p>Prima di tutto, guarda questo video: dove finiscono davvero i nostri dati quando li salviamo "nel cloud"?</p>
-
-        <div class="video-domande">
-            <div class="titolo"><i data-lucide="eye"></i> Mentre guardi, cerca le risposte a queste domande:</div>
-            <ul>
-                <li>Perché un data center così importante è stato costruito a 100 metri sottoterra, dentro una miniera?</li>
-                <li>Come fanno a raffreddare i computer senza sprecare acqua?</li>
-                <li>Che cosa rende questo luogo super sicuro (terremoti, alluvioni, attacchi...)?</li>
-                <li>A che cosa serve tutta questa enorme potenza di calcolo?</li>
-            </ul>
-        </div>
+        <h2>Dietro le Quinte: dove finiscono i dati?</h2>
+        <p>Guarda il video: dove va davvero quello che salviamo "nel cloud"?</p>
 
         <div class="intro-video">
             <video src="https://www.dropbox.com/scl/fi/xp5bt51sonwe8g9m45ivg/data_centrer.mp4?rlkey=m8qenr5zmpmuu4ra7zgogf0hg&amp;st=1zd6kfap&amp;dl=1" controls preload="metadata" playsinline>
@@ -341,30 +356,32 @@
             </video>
         </div>
 
-        <div class="scoperto-box">
-            <div class="titolo"><i data-lucide="lightbulb"></i> Cosa abbiamo scoperto</div>
+        <div class="video-domande">
+            <div class="titolo"><i data-lucide="eye"></i> Mentre guardi, cerca le risposte:</div>
             <ul>
-                <li>Il "cloud" è un <strong>luogo fisico</strong>: un edificio di 14 piani scavato nella roccia, a 100 metri di profondità.</li>
-                <li>I computer scaldano tantissimo: servono ventilazione e acqua in circolazione per raffreddarli.</li>
-                <li>Qui il raffreddamento è "a ciclo chiuso" e sfrutta i <strong>12°C costanti</strong> della roccia: meno energia e niente acqua sprecata.</li>
-                <li>La roccia protegge i dati da onde elettromagnetiche, terremoti, alluvioni e persino droni.</li>
-                <li>Tutta questa potenza serve ad addestrare l'<strong>intelligenza artificiale</strong>: milioni di miliardi di calcoli al secondo, come migliaia di computer insieme.</li>
+                <li>Perché il data center è costruito a 100 metri sottoterra, in una miniera?</li>
+                <li>Come raffreddano i computer senza sprecare acqua?</li>
+                <li>Cosa rende il luogo super sicuro (terremoti, alluvioni, attacchi...)?</li>
+                <li>A che cosa serve tutta questa potenza di calcolo?</li>
             </ul>
         </div>
+    </div>
 
-        <p>Ora clicca sulle carte per scoprire la verità sull'impatto ambientale della carta e del digitale.</p>
+    <div id="fase-4" class="section">
+        <h2>Smascheriamo i Miti</h2>
+        <p>Clicca sulle carte per scoprire la verità sull'impatto ambientale della carta e del digitale.</p>
 
         <div class="cards-grid">
             <div class="flip-card" onclick="this.classList.toggle('flipped')">
                 <div class="flip-card-inner">
                     <div class="flip-card-front"><i data-lucide="cloud"></i><span>Il Cloud è in cielo?</span></div>
-                    <div class="flip-card-back"><strong>FALSO!</strong><br>I dati stanno nei Data Center: enormi edifici pieni di computer accesi giorno e notte, che consumano molta energia per funzionare e raffreddarsi. Ma oggi se ne progettano di più efficienti, come quello scavato nella roccia che hai appena visto!</div>
+                    <div class="flip-card-back"><strong>FALSO!</strong><br>I dati stanno nei Data Center: edifici di 14 piani scavati nella roccia, pieni di computer accesi giorno e notte. Quello che hai visto sfrutta i 12&deg;C della roccia per raffreddarsi senza sprecare acqua.</div>
                 </div>
             </div>
             <div class="flip-card" onclick="this.classList.toggle('flipped')">
                 <div class="flip-card-inner">
                     <div class="flip-card-front"><i data-lucide="bot"></i><span>L'IA consuma poco?</span></div>
-                    <div class="flip-card-back"><strong>FALSO!</strong><br>Generare una singola immagine con l'Intelligenza Artificiale può consumare la stessa energia necessaria per ricaricare completamente il tuo smartphone!</div>
+                    <div class="flip-card-back"><strong>FALSO!</strong><br>Generare una sola immagine con l'Intelligenza Artificiale può consumare l'energia necessaria a ricaricare completamente il tuo smartphone!</div>
                 </div>
             </div>
             <div class="flip-card" onclick="this.classList.toggle('flipped')">
@@ -376,13 +393,37 @@
             <div class="flip-card" onclick="this.classList.toggle('flipped')">
                 <div class="flip-card-inner">
                     <div class="flip-card-front"><i data-lucide="recycle"></i><span>Rifiuti Elettronici vs Carta</span></div>
-                    <div class="flip-card-back"><strong>LA CARTA VINCE!</strong><br>Un foglio può essere riciclato fino a 7 volte. I tablet contengono minerali rari estratti con difficoltà e sono molto complessi da smaltire (E-waste).</div>
+                    <div class="flip-card-back"><strong>LA CARTA VINCE!</strong><br>Un foglio si ricicla fino a 7 volte. I tablet contengono minerali rari estratti con difficoltà e sono molto complessi da smaltire (E-waste).</div>
+                </div>
+            </div>
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front"><i data-lucide="mail"></i><span>Le email non inquinano?</span></div>
+                    <div class="flip-card-back"><strong>UN PO' SÌ!</strong><br>Ogni email viaggia e resta salvata su server accesi 24 ore su 24. Una sola email inquina poco, ma ne mandiamo miliardi ogni giorno nel mondo!</div>
+                </div>
+            </div>
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front"><i data-lucide="film"></i><span>Lo streaming è leggero?</span></div>
+                    <div class="flip-card-back"><strong>FALSO!</strong><br>Guardare video in alta qualità è una delle attività che consuma più dati ed energia nei data center. Abbassare la qualità quando non serve aiuta il pianeta.</div>
+                </div>
+            </div>
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front"><i data-lucide="plug-zap"></i><span>Caricabatterie sempre attaccato?</span></div>
+                    <div class="flip-card-back"><strong>OCCHIO!</strong><br>Un caricabatterie lasciato nella presa continua a consumare un po' di corrente anche da vuoto: sono i "vampiri energetici". Staccalo quando hai finito!</div>
+                </div>
+            </div>
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front"><i data-lucide="book-open"></i><span>Quanto dura un quaderno?</span></div>
+                    <div class="flip-card-back"><strong>TANTISSIMO!</strong><br>Un quaderno o un libro resta leggibile per decenni senza energia. Un tablet invece dura pochi anni e poi va sostituito e smaltito.</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="fase-4" class="section">
+    <div id="fase-5" class="section">
         <h2>Carta vs Digitale: costruisci il confronto</h2>
         <p>Per ogni affermazione decidi tu a chi dà forza: tocca <strong>Carta</strong> a sinistra, <strong>Digitale</strong> a destra. Puoi sceglierle entrambe se vale per tutti e due.</p>
 
@@ -392,10 +433,18 @@
         <div id="somme-box" class="somme-box" style="display:none;"></div>
     </div>
 
-    <div id="fase-5" class="section">
+    <div id="fase-6" class="section">
         <h2>Lo strumento giusto al momento giusto</h2>
         <p>Ultima sfida! Per ogni situazione scegli tu: <strong>Carta</strong>, <strong>un Mix</strong> o <strong>Digitale</strong>? Tocca una risposta e scopri il perché.</p>
         <div id="scenari-container"></div>
+    </div>
+
+    <div id="fase-7" class="section">
+        <h2>Le parole della tecnologia</h2>
+        <p>Un ultimo gioco: conosci il significato di queste parole? Scegli la risposta che ti sembra giusta — qui non si viene bocciati, si imparano parole nuove!</p>
+        <div id="quiz-container"></div>
+        <button class="btn" onclick="mostraRisultatoQuiz()" style="margin-top: 1rem;"><i data-lucide="award"></i><span>Scopri il tuo risultato</span></button>
+        <div id="quiz-risultato" class="somme-box" style="display:none;"></div>
     </div>
 
     <div class="btn-nav">
@@ -411,7 +460,7 @@
 
 <script>
     let faseCorrente = 1;
-    const totaleFasi = 5;
+    const totaleFasi = 7;
 
     const domandePoll = [
         "Per leggere un libro lungo o un fumetto:",
@@ -508,14 +557,15 @@
 
         faseCorrente += direzione;
 
-        document.getElementById(`fase-${faseCorrente}`).classList.add('active');
+        const nuovaSezione = document.getElementById(`fase-${faseCorrente}`);
+        nuovaSezione.classList.add('active');
         document.getElementById(`step-${faseCorrente}`).classList.add('active');
 
         // Aggiorna visibilità pulsanti
         document.getElementById('btn-prev').style.display = faseCorrente === 1 ? 'none' : '';
         document.getElementById('btn-next').style.display = faseCorrente === totaleFasi ? 'none' : '';
 
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        nuovaSezione.scrollTop = 0;
     }
 
     const scenari = [
@@ -592,11 +642,119 @@
         lucide.createIcons();
     }
 
+    const quiz = [
+        {
+            domanda: "Che cos'è un <strong>Data Center</strong>?",
+            opzioni: ["Una nuvola nel cielo che conserva i dati", "Un grande edificio pieno di computer che conservano i dati", "Un programma per scrivere al computer"],
+            corretta: 1,
+            spiega: "È un edificio fisico pieno di server, come la miniera che hai visto nel video."
+        },
+        {
+            domanda: "Quando salviamo una foto <strong>\"nel cloud\"</strong>, dove finisce davvero?",
+            opzioni: ["In un satellite nello spazio", "Su un server in un data center, da qualche parte sulla Terra", "Dentro la fotocamera per sempre"],
+            corretta: 1,
+            spiega: "Il cloud non è in cielo: è un computer (server) dentro un data center."
+        },
+        {
+            domanda: "Cosa vuol dire <strong>E-waste</strong>?",
+            opzioni: ["Le email che non leggiamo mai", "I rifiuti elettronici, come vecchi tablet e telefoni", "L'energia sprecata dai computer"],
+            corretta: 1,
+            spiega: "Sono i rifiuti elettronici: contengono materiali difficili da smaltire."
+        },
+        {
+            domanda: "Il marchio <strong>FSC</strong> su un quaderno indica che...",
+            opzioni: ["la carta viene da foreste gestite in modo responsabile", "il quaderno è fatto in Italia", "la carta è impermeabile"],
+            corretta: 0,
+            spiega: "FSC garantisce che la carta arriva da foreste coltivate e curate, dove si ripiantano gli alberi."
+        },
+        {
+            domanda: "Cos'è un <strong>server</strong>?",
+            opzioni: ["Lo schermo del computer", "Un cameriere robot", "Un computer potente che fornisce dati e servizi ad altri computer"],
+            corretta: 2,
+            spiega: "\"Server\" viene dall'inglese to serve, servire: serve dati agli altri dispositivi."
+        },
+        {
+            domanda: "L'<strong>Intelligenza Artificiale</strong> per funzionare...",
+            opzioni: ["non consuma quasi nulla", "ha bisogno di moltissima energia e calcoli", "funziona solo sulla carta"],
+            corretta: 1,
+            spiega: "Come hai visto, l'IA fa milioni di miliardi di calcoli e consuma molta energia."
+        }
+    ];
+
+    const risposteQuiz = {};
+
+    function buildQuiz() {
+        const container = document.getElementById('quiz-container');
+        quiz.forEach((q, i) => {
+            const div = document.createElement('div');
+            div.className = 'scenario-card';
+            let bottoni = '';
+            q.opzioni.forEach((op, j) => {
+                bottoni += `<button class="poll-btn" onclick="rispondiQuiz(${i}, ${j}, this)"><span>${op}</span></button>`;
+            });
+            div.innerHTML = `
+                <p class="scenario-testo"><strong>${i + 1}.</strong> ${q.domanda}</p>
+                <div class="poll-options" id="quiz-opz-${i}" style="flex-direction: column;">${bottoni}</div>
+                <div class="scenario-feedback" id="quiz-feedback-${i}"></div>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function rispondiQuiz(i, scelta, btn) {
+        if (i in risposteQuiz) return;
+
+        const corretta = scelta === quiz[i].corretta;
+        risposteQuiz[i] = corretta;
+
+        const opzioni = document.getElementById(`quiz-opz-${i}`);
+        opzioni.classList.add('bloccato');
+        opzioni.querySelectorAll('.poll-btn')[quiz[i].corretta].classList.add('corretta');
+        if (!corretta) btn.classList.add('errata');
+
+        const box = document.getElementById(`quiz-feedback-${i}`);
+        const esito = corretta ? 'ottima' : 'ok';
+        const icona = corretta ? 'circle-check' : 'lightbulb';
+        const apertura = corretta ? 'Esatto! ' : 'Bella idea, ma la parola giusta era un\'altra. ';
+        box.className = `scenario-feedback show ${esito}`;
+        box.innerHTML = `<i data-lucide="${icona}"></i><span>${apertura}${quiz[i].spiega}</span>`;
+        lucide.createIcons();
+    }
+
+    function mostraRisultatoQuiz() {
+        const totali = quiz.length;
+        const risposte = Object.keys(risposteQuiz).length;
+        const corrette = Object.values(risposteQuiz).filter(Boolean).length;
+        const box = document.getElementById('quiz-risultato');
+        box.style.display = 'block';
+
+        if (risposte < totali) {
+            box.innerHTML = `<p>Hai risposto a ${risposte} domande su ${totali}: provale tutte, ogni parola conta!</p>`;
+            return;
+        }
+
+        let messaggio;
+        if (corrette === totali) {
+            messaggio = "Strepitoso! Conosci tutte le parole della tecnologia: sei un vero cittadino digitale consapevole.";
+        } else if (corrette >= totali / 2) {
+            messaggio = "Bravissimo! Conoscevi già tante parole importanti, e quelle nuove ora le hai imparate.";
+        } else {
+            messaggio = "Hai scoperto un sacco di parole nuove: l'importante non è il punteggio, ma che ora le conosci! Puoi rifare il quiz quando vuoi.";
+        }
+
+        box.innerHTML = `
+            <div class="quiz-punteggio">${corrette} parole su ${totali} indovinate al primo colpo</div>
+            <div class="quiz-barra"><span style="width: ${corrette / totali * 100}%;"></span></div>
+            <p>${messaggio}</p>`;
+        box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
     // Inizializzazione
     window.onload = () => {
         initPoll();
         buildConfronto();
         buildScenari();
+        buildQuiz();
         lucide.createIcons();
     };
 </script>
