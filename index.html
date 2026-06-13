@@ -161,6 +161,17 @@
         .video-domande ul, .scoperto-box ul { margin: 0; padding-left: 1.3rem; }
         .video-domande li, .scoperto-box li { font-size: 1.1rem; line-height: 1.45; margin-bottom: 0.5rem; }
 
+        /* Scenari - la sfida finale */
+        .scenario-card { background: #f7fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .scenario-testo { font-size: 1.2rem; margin: 0 0 0.5rem; }
+        .scenario-feedback { display: none; margin-top: 1rem; padding: 1rem 1.2rem; border-radius: 10px; font-size: 1.1rem; line-height: 1.45; align-items: flex-start; gap: 0.6em; animation: fadeIn 0.4s; }
+        .scenario-feedback.show { display: flex; }
+        .scenario-feedback.ottima { background: #f0fff4; border-left: 5px solid var(--secondary); }
+        .scenario-feedback.ok { background: #fffaf0; border-left: 5px solid #dd9b34; }
+        .scenario-feedback [data-lucide] { flex-shrink: 0; margin-top: 2px; width: 1.4em; height: 1.4em; }
+        .scenario-feedback.ottima [data-lucide] { color: var(--secondary); }
+        .scenario-feedback.ok [data-lucide] { color: #b7791f; }
+
         /* Pulsanti */
         .btn {
             background-color: var(--primary);
@@ -255,15 +266,6 @@
         .flip-card-front { background-color: var(--primary); color: white; font-size: 1.5rem; font-weight: bold; }
         .flip-card-back { background-color: var(--secondary); color: white; transform: rotateY(180deg); font-size: 1.1rem; }
 
-        /* Manifesto */
-        textarea {
-            width: 100%; height: 200px; padding: 15px; font-size: 1.2rem; border-radius: 10px; border: 2px solid #cbd5e0; resize: none; font-family: inherit; margin-bottom: 20px; box-sizing: border-box;
-        }
-
-        .scenario-box {
-            background: #edf2f7; padding: 20px; border-radius: 10px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;
-        }
-        .scenario-box select { padding: 10px; font-size: 1.1rem; border-radius: 5px; }
 
         /* Adattamento per iPad in verticale e schermi piccoli */
         @media (max-width: 900px) {
@@ -292,7 +294,7 @@
         <div class="step" id="step-2">2. Il Termometro</div>
         <div class="step" id="step-3">3. Dietro le Quinte</div>
         <div class="step" id="step-4">4. Il Confronto</div>
-        <div class="step" id="step-5">5. Il Manifesto</div>
+        <div class="step" id="step-5">5. La Sfida Finale</div>
     </div>
 
     <div id="fase-1" class="section active">
@@ -304,7 +306,7 @@
                 <p><strong>Cosa succede alla fine? C'è un limite al digitale?</strong></p>
             </div>
             <div>
-                <video src="ipad_carta.mp4" controls preload="auto" playsinline>
+                <video src="https://www.dropbox.com/scl/fi/y1d6dzp3x9ydx8himzl2p/ipad_carta.mp4?rlkey=wvh1ypi4d2j5zh20x225nif9r&amp;st=mypsqhvt&amp;dl=1" controls preload="auto" playsinline>
                     Il tuo browser non supporta il tag video. Assicurati che il file ipad_carta.mp4 sia nella stessa cartella.
                 </video>
             </div>
@@ -334,7 +336,7 @@
         </div>
 
         <div class="intro-video">
-            <video src="data_center.mp4" controls preload="metadata" playsinline>
+            <video src="https://www.dropbox.com/scl/fi/xp5bt51sonwe8g9m45ivg/data_centrer.mp4?rlkey=m8qenr5zmpmuu4ra7zgogf0hg&amp;st=1zd6kfap&amp;dl=1" controls preload="metadata" playsinline>
                 Il tuo browser non supporta il tag video. Assicurati che il file data_center.mp4 sia nella stessa cartella.
             </video>
         </div>
@@ -391,17 +393,9 @@
     </div>
 
     <div id="fase-5" class="section">
-        <h2>Il Manifesto del Consumo Intelligente</h2>
-        <div class="split-layout">
-            <div>
-                <p>Ora che conoscete i "segreti" dell'energia digitale e del ciclo della carta, quali sono le regole d'oro per la nostra classe?</p>
-                <p>Scrivi 3 regole su come usare meglio tablet, computer e quaderni per rispettare l'ambiente.</p>
-            </div>
-            <div>
-                <textarea id="manifesto-text" placeholder="Esempio: Regola 1: Spegniamo lo schermo del computer quando la maestra spiega per non sprecare energia..."></textarea>
-                <button class="btn" onclick="stampaManifesto()" style="width: 100%;"><i data-lucide="printer"></i><span>Stampa il Manifesto</span></button>
-            </div>
-        </div>
+        <h2>Lo strumento giusto al momento giusto</h2>
+        <p>Ultima sfida! Per ogni situazione scegli tu: <strong>Carta</strong>, <strong>un Mix</strong> o <strong>Digitale</strong>? Tocca una risposta e scopri il perché.</p>
+        <div id="scenari-container"></div>
     </div>
 
     <div class="btn-nav">
@@ -503,7 +497,7 @@
                 <span><i data-lucide="laptop"></i> Digitale: ${digitale}</span>
             </div>
             <p>${verdetto}</p>
-            <p><strong>La morale:</strong> non è una gara da vincere. Lo strumento intelligente è quello giusto al momento giusto — ed è proprio quello che scriverai nel tuo Manifesto.</p>`;
+            <p><strong>La morale:</strong> non è una gara da vincere. Lo strumento intelligente è quello giusto al momento giusto — e ora lo metterai alla prova nell'ultima sfida!</p>`;
         lucide.createIcons();
         box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
@@ -524,30 +518,85 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function stampaManifesto() {
-        const testo = document.getElementById('manifesto-text').value;
-        if(testo.trim() === "") {
-            alert("Scrivi prima le tue regole!");
-            return;
+    const scenari = [
+        {
+            testo: "Devi prendere al volo il numero di telefono di un compagno mentre siete in cortile.",
+            feedback: {
+                carta: { esito: "ottima", testo: "Perfetto: un foglietto e una penna funzionano subito, senza batteria né password." },
+                mix: { esito: "ok", testo: "Va bene: puoi scriverlo al volo su carta e poi salvarlo con calma nei contatti." },
+                digitale: { esito: "ok", testo: "Si può fare, ma devi sbloccare il telefono e aprire l'app... a volte un foglietto è più veloce." }
+            }
+        },
+        {
+            testo: "Devi leggere un romanzo di 300 pagine durante le vacanze estive.",
+            feedback: {
+                carta: { esito: "ottima", testo: "Ottimo: niente schermo che stanca gli occhi, niente notifiche che ti distraggono." },
+                mix: { esito: "ottima", testo: "Scelta intelligente: un e-reader sta in valigia con mille libri, la carta riposa gli occhi. Usi l'uno o l'altra a seconda di dove sei." },
+                digitale: { esito: "ok", testo: "Un e-reader è comodo in viaggio, ma lo schermo retroilluminato stanca di più nelle letture lunghe." }
+            }
+        },
+        {
+            testo: "Devi consegnare una ricerca piena di immagini, mappe e collegamenti a siti.",
+            feedback: {
+                carta: { esito: "ok", testo: "Bella da sfogliare, ma immagini a colori e link cliccabili sulla carta non rendono benissimo." },
+                mix: { esito: "ok", testo: "Puoi progettarla su carta e poi realizzarla al computer per immagini e collegamenti." },
+                digitale: { esito: "ottima", testo: "Perfetto: immagini, link e mappe interattive sono il punto di forza del digitale, e la condividi in un clic." }
+            }
+        },
+        {
+            testo: "Devi studiare e ripassare per un'interrogazione importante di domani.",
+            feedback: {
+                carta: { esito: "ottima", testo: "Ottimo: scrivere e sottolineare a mano aiuta davvero a fissare le cose in memoria." },
+                mix: { esito: "ottima", testo: "Scelta da campioni: video e schemi digitali per capire, carta e penna per ripassare e memorizzare." },
+                digitale: { esito: "ok", testo: "Utile per cercare e vedere spiegazioni, ma attenzione alle notifiche che spezzano la concentrazione." }
+            }
+        },
+        {
+            testo: "Devi mandare i tuoi appunti a un compagno assente che abita lontano.",
+            feedback: {
+                carta: { esito: "ok", testo: "Difficile: dovresti fotografarli o spedirli per posta... ci mette giorni!" },
+                mix: { esito: "ok", testo: "Funziona: scatti una foto agli appunti di carta e la invii subito." },
+                digitale: { esito: "ottima", testo: "Perfetto: gli appunti digitali arrivano dall'altra parte del mondo in pochi secondi." }
+            }
         }
+    ];
 
-        const finestraStampa = window.open('', '', 'height=600,width=800');
-        finestraStampa.document.write('<html><head><title>Manifesto della Classe</title>');
-        finestraStampa.document.write('<style>body{font-family: Arial; padding: 40px; font-size: 24px;} h1{color: #1f3f7a; text-align:center;} p{white-space: pre-wrap;} .logo{display:block; margin:0 auto 20px; height:120px;} footer{margin-top:40px; text-align:center; color:#718096; font-size:16px;}</style>');
-        finestraStampa.document.write('</head><body>');
-        finestraStampa.document.write('<img src="logo.jpg" class="logo" alt="Logo scuola">');
-        finestraStampa.document.write('<h1>Il Nostro Manifesto Digitale e Cartaceo</h1>');
-        finestraStampa.document.write('<p>' + testo.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</p>');
-        finestraStampa.document.write('<footer>Scuola Secondaria Sacra Famiglia di Orzinuovi (BS) &middot; &copy; 2026 Andrea Cerioli &mdash; Animatore Digitale</footer>');
-        finestraStampa.document.write('</body></html>');
-        finestraStampa.document.close();
-        setTimeout(() => finestraStampa.print(), 300);
+    function buildScenari() {
+        const container = document.getElementById('scenari-container');
+        scenari.forEach((s, i) => {
+            const div = document.createElement('div');
+            div.className = 'scenario-card';
+            div.innerHTML = `
+                <p class="scenario-testo"><strong>${i + 1}.</strong> ${s.testo}</p>
+                <div class="poll-options" id="scelte-${i}">
+                    <button class="poll-btn" onclick="scegliScenario(${i}, 'carta', this)"><i data-lucide="pencil"></i><span>Carta</span></button>
+                    <button class="poll-btn" onclick="scegliScenario(${i}, 'mix', this)"><i data-lucide="scale"></i><span>Un Mix</span></button>
+                    <button class="poll-btn" onclick="scegliScenario(${i}, 'digitale', this)"><i data-lucide="laptop"></i><span>Digitale</span></button>
+                </div>
+                <div class="scenario-feedback" id="feedback-${i}"></div>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function scegliScenario(i, scelta, btn) {
+        const buttons = document.querySelectorAll(`#scelte-${i} .poll-btn`);
+        buttons.forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+
+        const f = scenari[i].feedback[scelta];
+        const box = document.getElementById(`feedback-${i}`);
+        const icona = f.esito === 'ottima' ? 'circle-check' : 'info';
+        box.className = `scenario-feedback show ${f.esito}`;
+        box.innerHTML = `<i data-lucide="${icona}"></i><span>${f.testo}</span>`;
+        lucide.createIcons();
     }
 
     // Inizializzazione
     window.onload = () => {
         initPoll();
         buildConfronto();
+        buildScenari();
         lucide.createIcons();
     };
 </script>
