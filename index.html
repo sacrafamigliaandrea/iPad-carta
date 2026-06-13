@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="author" content="Andrea Cerioli — Animatore Digitale, Scuola Secondaria Sacra Famiglia di Orzinuovi">
+    <meta name="copyright" content="© 2026 Scuola Secondaria Sacra Famiglia di Orzinuovi — Tutti i diritti riservati">
+    <title>La Sfida: Carta vs Digitale</title>
+    <!--
+      LA SFIDA: CARTA VS DIGITALE - attività di cittadinanza digitale (iPad)
+      Scuola Secondaria Sacra Famiglia di Orzinuovi (BS)
+      Animatore Digitale: Andrea Cerioli
+      (c) 2026 - Tutti i diritti riservati. Vietata la riproduzione
+      non autorizzata di codice, testi e immagini.
+    -->
+    <style>
+        :root {
+            --primary: #1f3f7a;
+            --primary-dark: #16305e;
+            --secondary: #38a169;
+            --bg-color: #f7fafc;
+            --text-color: #2d3748;
+            --card-bg: #ffffff;
+        }
+
+        * { -webkit-tap-highlight-color: transparent; }
+
+        html { -webkit-text-size-adjust: 100%; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Container ottimizzato per schermi larghi */
+        #app-container {
+            width: 90%;
+            max-width: 1400px;
+            margin: 2rem auto;
+            background: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 80vh;
+        }
+
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1.5rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            position: relative;
+        }
+
+        header .logo {
+            height: 80px;
+            width: 80px;
+            border-radius: 50%;
+            background: white;
+            padding: 6px;
+            box-sizing: border-box;
+            flex-shrink: 0;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+
+        header h1 { margin: 0; font-size: 2.5rem; }
+
+        .progress-bar {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            background: #e2e8f0;
+            padding: 10px;
+        }
+
+        .step {
+            padding: 10px 20px;
+            border-radius: 20px;
+            background: #cbd5e0;
+            color: #4a5568;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .step.active {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .section {
+            display: none;
+            padding: 3rem;
+            flex-grow: 1;
+            animation: fadeIn 0.5s;
+        }
+
+        .section.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Tipografia e Layout Generico */
+        h2 { font-size: 2rem; color: var(--primary); margin-bottom: 1.5rem; border-bottom: 3px solid var(--secondary); padding-bottom: 10px; display: inline-block;}
+        p { font-size: 1.2rem; line-height: 1.6; }
+
+        /* Video e Contenuti affiancati per schermi grandi */
+        .split-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        video {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        /* Pulsanti */
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 20px;
+            touch-action: manipulation;
+        }
+
+        .btn:hover { background-color: var(--primary-dark); }
+
+        .btn-nav { display: flex; justify-content: space-between; padding: 2rem 3rem; background: #edf2f7; }
+
+        /* Footer scuola */
+        .app-footer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.9rem;
+            padding: 1.2rem 2rem;
+            background: var(--primary-dark);
+            color: #cbd5e0;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            text-align: center;
+        }
+        .app-footer img { height: 40px; width: 40px; border-radius: 50%; background: white; padding: 4px; box-sizing: border-box; flex-shrink: 0; }
+        .app-footer strong { color: #fff; }
+
+        /* Icone Lucide */
+        [data-lucide] { width: 1.15em; height: 1.15em; vertical-align: -0.18em; stroke-width: 2.25; }
+        .btn, .poll-btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.55em; }
+        .flip-card-front { gap: 0.7rem; }
+        .flip-card-front [data-lucide] { width: 2.6rem; height: 2.6rem; }
+
+        /* Votazione Termometro */
+        .poll-options { display: flex; gap: 15px; margin-top: 20px; }
+        .poll-btn {
+            flex: 1; padding: 20px; font-size: 1.2rem; font-weight: bold; border: 2px solid var(--primary);
+            background: white; color: var(--primary); border-radius: 10px; cursor: pointer; transition: 0.3s;
+            touch-action: manipulation;
+        }
+        .poll-btn:hover, .poll-btn.selected { background: var(--primary); color: white; }
+
+        /* Griglia Flip Cards (Dietro le quinte) */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .flip-card {
+            background-color: transparent;
+            height: 250px;
+            perspective: 1000px;
+            cursor: pointer;
+            touch-action: manipulation;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%; height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 15px;
+        }
+
+        .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%; height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 15px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .flip-card-front { background-color: var(--primary); color: white; font-size: 1.5rem; font-weight: bold; }
+        .flip-card-back { background-color: var(--secondary); color: white; transform: rotateY(180deg); font-size: 1.1rem; }
+
+        /* Manifesto */
+        textarea {
+            width: 100%; height: 200px; padding: 15px; font-size: 1.2rem; border-radius: 10px; border: 2px solid #cbd5e0; resize: none; font-family: inherit; margin-bottom: 20px; box-sizing: border-box;
+        }
+
+        .scenario-box {
+            background: #edf2f7; padding: 20px; border-radius: 10px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;
+        }
+        .scenario-box select { padding: 10px; font-size: 1.1rem; border-radius: 5px; }
+
+        /* Adattamento per iPad in verticale e schermi piccoli */
+        @media (max-width: 900px) {
+            header h1 { font-size: 1.8rem; }
+            header .logo { height: 60px; width: 60px; }
+            .section { padding: 2rem 1.5rem; }
+            .split-layout { grid-template-columns: 1fr; gap: 1.5rem; }
+            .btn-nav { padding: 1.5rem; }
+            h2 { font-size: 1.6rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="app-container">
+    <header>
+        <img src="logo.jpg" alt="Logo Scuola Cittadinanza Digitale - sacrafamiglia.edu.it" class="logo">
+        <h1>La Sfida: Carta vs Digitale</h1>
+    </header>
+
+    <div class="progress-bar">
+        <div class="step active" id="step-1">1. Il Video</div>
+        <div class="step" id="step-2">2. Il Termometro</div>
+        <div class="step" id="step-3">3. Dietro le Quinte</div>
+        <div class="step" id="step-4">4. Il Manifesto</div>
+    </div>
+
+    <div id="fase-1" class="section active">
+        <h2>Guarda lo spot</h2>
+        <div class="split-layout">
+            <div>
+                <p>Guarda attentamente il video "Le Trèfle".</p>
+                <p>Osserva come il protagonista cerca di usare la tecnologia per sostituire ogni oggetto di carta in casa.</p>
+                <p><strong>Cosa succede alla fine? C'è un limite al digitale?</strong></p>
+            </div>
+            <div>
+                <video src="ipad_carta.mp4" controls preload="auto" playsinline>
+                    Il tuo browser non supporta il tag video. Assicurati che il file ipad_carta.mp4 sia nella stessa cartella.
+                </video>
+            </div>
+        </div>
+    </div>
+
+    <div id="fase-2" class="section">
+        <h2>Il Termometro della Classe</h2>
+        <p>In base alla tua esperienza personale, quale strumento preferisci per queste azioni?</p>
+
+        <div id="poll-container">
+            </div>
+    </div>
+
+    <div id="fase-3" class="section">
+        <h2>Dietro le Quinte: Smascheriamo i Miti</h2>
+        <p>Clicca sulle carte per scoprire la verità sull'impatto ambientale della carta e del digitale.</p>
+
+        <div class="cards-grid">
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front"><i data-lucide="cloud"></i><span>Il Cloud è in cielo?</span></div>
+                    <div class="flip-card-back"><strong>FALSO!</strong><br>I dati sono salvati nei Data Center: enormi capannoni pieni di computer accesi 24h/24 che consumano tantissima energia per funzionare e raffreddarsi.</div>
+                </div>
+            </div>
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front"><i data-lucide="bot"></i><span>L'IA consuma poco?</span></div>
+                    <div class="flip-card-back"><strong>FALSO!</strong><br>Generare una singola immagine con l'Intelligenza Artificiale può consumare la stessa energia necessaria per ricaricare completamente il tuo smartphone!</div>
+                </div>
+            </div>
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front"><i data-lucide="trees"></i><span>La carta distrugge le foreste?</span></div>
+                    <div class="flip-card-back"><strong>NON SEMPRE!</strong><br>Se ha il marchio FSC, proviene da foreste coltivate. Per ogni albero tagliato ne piantano di nuovi. E gli alberi giovani assorbono più CO2!</div>
+                </div>
+            </div>
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front"><i data-lucide="recycle"></i><span>Rifiuti Elettronici vs Carta</span></div>
+                    <div class="flip-card-back"><strong>LA CARTA VINCE!</strong><br>Un foglio può essere riciclato fino a 7 volte. I tablet contengono minerali rari estratti con difficoltà e sono molto complessi da smaltire (E-waste).</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="fase-4" class="section">
+        <h2>Il Manifesto del Consumo Intelligente</h2>
+        <div class="split-layout">
+            <div>
+                <p>Ora che conoscete i "segreti" dell'energia digitale e del ciclo della carta, quali sono le regole d'oro per la nostra classe?</p>
+                <p>Scrivi 3 regole su come usare meglio tablet, computer e quaderni per rispettare l'ambiente.</p>
+            </div>
+            <div>
+                <textarea id="manifesto-text" placeholder="Esempio: Regola 1: Spegniamo lo schermo del computer quando la maestra spiega per non sprecare energia..."></textarea>
+                <button class="btn" onclick="stampaManifesto()" style="width: 100%;"><i data-lucide="printer"></i><span>Stampa il Manifesto</span></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="btn-nav">
+        <button class="btn" id="btn-prev" onclick="cambiaFase(-1)" style="display:none;"><i data-lucide="arrow-left"></i><span>Indietro</span></button>
+        <button class="btn" id="btn-next" onclick="cambiaFase(1)" style="margin-left: auto;"><span>Avanti</span><i data-lucide="arrow-right"></i></button>
+    </div>
+
+    <footer class="app-footer">
+        <img src="logo.jpg" alt="Logo Scuola Sacra Famiglia">
+        <div><strong>Scuola Secondaria Sacra Famiglia di Orzinuovi (BS)</strong><br>&copy; 2026 Andrea Cerioli &mdash; Animatore Digitale &middot; Tutti i diritti riservati</div>
+    </footer>
+</div>
+
+<script>
+    let faseCorrente = 1;
+    const totaleFasi = 4;
+
+    const domandePoll = [
+        "Per leggere un libro lungo o un fumetto:",
+        "Per prendere un appunto veloce al volo:",
+        "Per fare una ricerca con tante immagini:"
+    ];
+
+    function initPoll() {
+        const container = document.getElementById('poll-container');
+        domandePoll.forEach((domanda, index) => {
+            const div = document.createElement('div');
+            div.innerHTML = `
+                <p><strong>${index + 1}. ${domanda}</strong></p>
+                <div class="poll-options" id="poll-${index}">
+                    <button class="poll-btn" onclick="vota(${index}, this)"><i data-lucide="pencil"></i><span>Solo Carta</span></button>
+                    <button class="poll-btn" onclick="vota(${index}, this)"><i data-lucide="scale"></i><span>Un Mix</span></button>
+                    <button class="poll-btn" onclick="vota(${index}, this)"><i data-lucide="laptop"></i><span>Solo Digitale</span></button>
+                </div>
+                <hr style="border: 0; border-top: 1px solid #e2e8f0; margin-top: 20px;">
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function vota(domandaIndex, btn) {
+        const buttons = document.querySelectorAll(`#poll-${domandaIndex} .poll-btn`);
+        buttons.forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+    }
+
+    function cambiaFase(direzione) {
+        document.getElementById(`fase-${faseCorrente}`).classList.remove('active');
+        document.getElementById(`step-${faseCorrente}`).classList.remove('active');
+
+        faseCorrente += direzione;
+
+        document.getElementById(`fase-${faseCorrente}`).classList.add('active');
+        document.getElementById(`step-${faseCorrente}`).classList.add('active');
+
+        // Aggiorna visibilità pulsanti
+        document.getElementById('btn-prev').style.display = faseCorrente === 1 ? 'none' : '';
+        document.getElementById('btn-next').style.display = faseCorrente === totaleFasi ? 'none' : '';
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function stampaManifesto() {
+        const testo = document.getElementById('manifesto-text').value;
+        if(testo.trim() === "") {
+            alert("Scrivi prima le tue regole!");
+            return;
+        }
+
+        const finestraStampa = window.open('', '', 'height=600,width=800');
+        finestraStampa.document.write('<html><head><title>Manifesto della Classe</title>');
+        finestraStampa.document.write('<style>body{font-family: Arial; padding: 40px; font-size: 24px;} h1{color: #1f3f7a; text-align:center;} p{white-space: pre-wrap;} .logo{display:block; margin:0 auto 20px; height:120px;} footer{margin-top:40px; text-align:center; color:#718096; font-size:16px;}</style>');
+        finestraStampa.document.write('</head><body>');
+        finestraStampa.document.write('<img src="logo.jpg" class="logo" alt="Logo scuola">');
+        finestraStampa.document.write('<h1>Il Nostro Manifesto Digitale e Cartaceo</h1>');
+        finestraStampa.document.write('<p>' + testo.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</p>');
+        finestraStampa.document.write('<footer>Scuola Secondaria Sacra Famiglia di Orzinuovi (BS) &middot; &copy; 2026 Andrea Cerioli &mdash; Animatore Digitale</footer>');
+        finestraStampa.document.write('</body></html>');
+        finestraStampa.document.close();
+        setTimeout(() => finestraStampa.print(), 300);
+    }
+
+    // Inizializzazione
+    window.onload = () => {
+        initPoll();
+        lucide.createIcons();
+    };
+</script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+</body>
+</html>
