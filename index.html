@@ -132,6 +132,35 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
+        .intro-video { max-width: 720px; margin: 1.5rem auto 2.5rem; }
+
+        /* Confronto Carta vs Digitale */
+        .confronto { margin-top: 1.5rem; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; }
+        .confronto-head, .confronto-row { display: grid; grid-template-columns: 90px 1fr 90px; align-items: center; gap: 1rem; padding: 0.85rem 1.1rem; }
+        .confronto-head { background: var(--primary); color: #fff; font-weight: bold; }
+        .confronto-head span { display: inline-flex; align-items: center; gap: 0.4em; }
+        .confronto-head span:nth-child(2) { justify-content: center; }
+        .confronto-head span:last-child { justify-content: flex-end; }
+        .confronto-row:nth-child(odd) { background: #f7fafc; }
+        .confronto-row .aff { font-size: 1.1rem; line-height: 1.4; }
+        .chk { width: 50px; height: 50px; justify-self: center; border-radius: 12px; border: 2px solid #cbd5e0; background: #fff; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 0; touch-action: manipulation; transition: 0.2s; }
+        .chk [data-lucide] { width: 26px; height: 26px; opacity: 0; transition: 0.2s; color: #fff; }
+        .chk.on { background: var(--secondary); border-color: var(--secondary); }
+        .chk.on [data-lucide] { opacity: 1; }
+        .somme-box { margin-top: 1.5rem; padding: 1.5rem; border-radius: 12px; background: #edf2f7; border-left: 6px solid var(--secondary); animation: fadeIn 0.4s; }
+        .somme-tot { display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center; font-size: 1.3rem; font-weight: bold; color: var(--primary); margin-bottom: 1rem; }
+        .somme-tot span { display: inline-flex; align-items: center; gap: 0.5em; }
+
+        /* Riquadri attorno al video data center */
+        .video-domande, .scoperto-box { max-width: 720px; margin: 1.5rem auto; padding: 1.2rem 1.5rem; border-radius: 10px; }
+        .video-domande { background: #ebf4ff; border-left: 6px solid var(--primary); }
+        .scoperto-box { background: #f0fff4; border-left: 6px solid var(--secondary); margin-bottom: 2.5rem; }
+        .video-domande .titolo, .scoperto-box .titolo { display: flex; align-items: center; gap: 0.5em; font-weight: bold; font-size: 1.15rem; margin-bottom: 0.6rem; }
+        .video-domande .titolo { color: var(--primary); }
+        .scoperto-box .titolo { color: #276749; }
+        .video-domande ul, .scoperto-box ul { margin: 0; padding-left: 1.3rem; }
+        .video-domande li, .scoperto-box li { font-size: 1.1rem; line-height: 1.45; margin-bottom: 0.5rem; }
+
         /* Pulsanti */
         .btn {
             background-color: var(--primary);
@@ -244,6 +273,9 @@
             .split-layout { grid-template-columns: 1fr; gap: 1.5rem; }
             .btn-nav { padding: 1.5rem; }
             h2 { font-size: 1.6rem; }
+            .confronto-head, .confronto-row { grid-template-columns: 60px 1fr 60px; gap: 0.6rem; padding: 0.7rem; }
+            .confronto-row .aff { font-size: 1rem; }
+            .chk { width: 46px; height: 46px; }
         }
     </style>
 </head>
@@ -259,7 +291,8 @@
         <div class="step active" id="step-1">1. Il Video</div>
         <div class="step" id="step-2">2. Il Termometro</div>
         <div class="step" id="step-3">3. Dietro le Quinte</div>
-        <div class="step" id="step-4">4. Il Manifesto</div>
+        <div class="step" id="step-4">4. Il Confronto</div>
+        <div class="step" id="step-5">5. Il Manifesto</div>
     </div>
 
     <div id="fase-1" class="section active">
@@ -288,13 +321,42 @@
 
     <div id="fase-3" class="section">
         <h2>Dietro le Quinte: Smascheriamo i Miti</h2>
-        <p>Clicca sulle carte per scoprire la verità sull'impatto ambientale della carta e del digitale.</p>
+        <p>Prima di tutto, guarda questo video: dove finiscono davvero i nostri dati quando li salviamo "nel cloud"?</p>
+
+        <div class="video-domande">
+            <div class="titolo"><i data-lucide="eye"></i> Mentre guardi, cerca le risposte a queste domande:</div>
+            <ul>
+                <li>Perché un data center così importante è stato costruito a 100 metri sottoterra, dentro una miniera?</li>
+                <li>Come fanno a raffreddare i computer senza sprecare acqua?</li>
+                <li>Che cosa rende questo luogo super sicuro (terremoti, alluvioni, attacchi...)?</li>
+                <li>A che cosa serve tutta questa enorme potenza di calcolo?</li>
+            </ul>
+        </div>
+
+        <div class="intro-video">
+            <video src="data_center.mp4" controls preload="metadata" playsinline>
+                Il tuo browser non supporta il tag video. Assicurati che il file data_center.mp4 sia nella stessa cartella.
+            </video>
+        </div>
+
+        <div class="scoperto-box">
+            <div class="titolo"><i data-lucide="lightbulb"></i> Cosa abbiamo scoperto</div>
+            <ul>
+                <li>Il "cloud" è un <strong>luogo fisico</strong>: un edificio di 14 piani scavato nella roccia, a 100 metri di profondità.</li>
+                <li>I computer scaldano tantissimo: servono ventilazione e acqua in circolazione per raffreddarli.</li>
+                <li>Qui il raffreddamento è "a ciclo chiuso" e sfrutta i <strong>12°C costanti</strong> della roccia: meno energia e niente acqua sprecata.</li>
+                <li>La roccia protegge i dati da onde elettromagnetiche, terremoti, alluvioni e persino droni.</li>
+                <li>Tutta questa potenza serve ad addestrare l'<strong>intelligenza artificiale</strong>: milioni di miliardi di calcoli al secondo, come migliaia di computer insieme.</li>
+            </ul>
+        </div>
+
+        <p>Ora clicca sulle carte per scoprire la verità sull'impatto ambientale della carta e del digitale.</p>
 
         <div class="cards-grid">
             <div class="flip-card" onclick="this.classList.toggle('flipped')">
                 <div class="flip-card-inner">
                     <div class="flip-card-front"><i data-lucide="cloud"></i><span>Il Cloud è in cielo?</span></div>
-                    <div class="flip-card-back"><strong>FALSO!</strong><br>I dati sono salvati nei Data Center: enormi capannoni pieni di computer accesi 24h/24 che consumano tantissima energia per funzionare e raffreddarsi.</div>
+                    <div class="flip-card-back"><strong>FALSO!</strong><br>I dati stanno nei Data Center: enormi edifici pieni di computer accesi giorno e notte, che consumano molta energia per funzionare e raffreddarsi. Ma oggi se ne progettano di più efficienti, come quello scavato nella roccia che hai appena visto!</div>
                 </div>
             </div>
             <div class="flip-card" onclick="this.classList.toggle('flipped')">
@@ -319,6 +381,16 @@
     </div>
 
     <div id="fase-4" class="section">
+        <h2>Carta vs Digitale: costruisci il confronto</h2>
+        <p>Per ogni affermazione decidi tu a chi dà forza: tocca <strong>Carta</strong> a sinistra, <strong>Digitale</strong> a destra. Puoi sceglierle entrambe se vale per tutti e due.</p>
+
+        <div class="confronto" id="confronto"></div>
+
+        <button class="btn" onclick="tiraLeSomme()" style="margin-top: 2rem;"><i data-lucide="calculator"></i><span>Tira le somme</span></button>
+        <div id="somme-box" class="somme-box" style="display:none;"></div>
+    </div>
+
+    <div id="fase-5" class="section">
         <h2>Il Manifesto del Consumo Intelligente</h2>
         <div class="split-layout">
             <div>
@@ -345,7 +417,7 @@
 
 <script>
     let faseCorrente = 1;
-    const totaleFasi = 4;
+    const totaleFasi = 5;
 
     const domandePoll = [
         "Per leggere un libro lungo o un fumetto:",
@@ -374,6 +446,66 @@
         const buttons = document.querySelectorAll(`#poll-${domandaIndex} .poll-btn`);
         buttons.forEach(b => b.classList.remove('selected'));
         btn.classList.add('selected');
+    }
+
+    const affermazioni = [
+        "Lo posso leggere anche senza elettricità né internet",
+        "Ci posso cercare dentro una parola in un istante",
+        "Lo posso copiare e inviare a tante persone in un secondo",
+        "Può durare secoli senza diventare illeggibile",
+        "Porto con me mille pagine in un solo dispositivo",
+        "Non dipende da un account, un'azienda o una password",
+        "Lo posso correggere e aggiornare all'infinito",
+        "Per conservarlo non serve energia giorno e notte"
+    ];
+
+    function buildConfronto() {
+        const c = document.getElementById('confronto');
+        let html = '<div class="confronto-head"><span><i data-lucide="pencil"></i> Carta</span><span>Affermazione</span><span>Digitale <i data-lucide="laptop"></i></span></div>';
+        affermazioni.forEach((a) => {
+            html += `<div class="confronto-row">
+                <button class="chk" data-side="carta" onclick="toggleChk(this)" aria-pressed="false" aria-label="Assegna alla carta"><i data-lucide="check"></i></button>
+                <span class="aff">${a}</span>
+                <button class="chk" data-side="digitale" onclick="toggleChk(this)" aria-pressed="false" aria-label="Assegna al digitale"><i data-lucide="check"></i></button>
+            </div>`;
+        });
+        c.innerHTML = html;
+    }
+
+    function toggleChk(btn) {
+        const on = btn.classList.toggle('on');
+        btn.setAttribute('aria-pressed', on);
+    }
+
+    function tiraLeSomme() {
+        const carta = document.querySelectorAll('.chk[data-side="carta"].on').length;
+        const digitale = document.querySelectorAll('.chk[data-side="digitale"].on').length;
+        const box = document.getElementById('somme-box');
+        box.style.display = 'block';
+
+        if (carta + digitale === 0) {
+            box.innerHTML = '<p>Assegna almeno qualche affermazione prima di tirare le somme!</p>';
+            return;
+        }
+
+        let verdetto;
+        if (carta === digitale) {
+            verdetto = "Hai dato pari forza a carta e digitale: è proprio così! Nessuno dei due vince, sono bravi in cose diverse.";
+        } else if (carta > digitale) {
+            verdetto = "Per te la carta ha più punti di forza. Vero in tante situazioni... ma il digitale resta imbattibile per cercare, copiare e portare tutto con sé.";
+        } else {
+            verdetto = "Per te il digitale ha più punti di forza. Comodissimo... ma ricorda che dipende da energia, connessione e da chi gestisce i dati: la carta non chiede nulla di tutto questo.";
+        }
+
+        box.innerHTML = `
+            <div class="somme-tot">
+                <span><i data-lucide="pencil"></i> Carta: ${carta}</span>
+                <span><i data-lucide="laptop"></i> Digitale: ${digitale}</span>
+            </div>
+            <p>${verdetto}</p>
+            <p><strong>La morale:</strong> non è una gara da vincere. Lo strumento intelligente è quello giusto al momento giusto — ed è proprio quello che scriverai nel tuo Manifesto.</p>`;
+        lucide.createIcons();
+        box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
     function cambiaFase(direzione) {
@@ -415,6 +547,7 @@
     // Inizializzazione
     window.onload = () => {
         initPoll();
+        buildConfronto();
         lucide.createIcons();
     };
 </script>
